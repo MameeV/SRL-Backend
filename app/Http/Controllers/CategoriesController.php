@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Categories;
+use Response;
+use Illuminate\Support\Facades\Validator;
+use Purifier;
 
 class CategoriesController extends Controller
 {
@@ -10,7 +14,7 @@ class CategoriesController extends Controller
     public function index()
     {
       //create a query to get a list and receive on the Frontend
-      $catorgies = Category::all();
+      $catergories = Category::all();
 
       return Response::json($catories);
     }
@@ -30,7 +34,7 @@ class CategoriesController extends Controller
 
       $category = new Category;
 
-      $category->name= $request->input('name');
+      $category->name = $request->input('name');
 
       $category->save();
 

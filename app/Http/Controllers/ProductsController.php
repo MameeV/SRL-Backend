@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Categories;
+use Response;
+use Illuminate\Support\Facades\Validator;
+use Purifier;
 
 class ProductsController extends Controller
 {
@@ -16,8 +20,12 @@ class ProductsController extends Controller
   public function store(Request $request)
   {
     $rules = [
-      'name' => 'required',
-      //add more!
+      'productName' => 'required',
+      'categoryID' => 'required',
+      'image' => 'required',
+      'description' => 'required',
+      'price' => 'required',
+      'stock' => 'required',
     ];
 
     $validator = Validator::make(Purifier::clean($request->all()), $rules);
@@ -28,18 +36,32 @@ class ProductsController extends Controller
 
     $product = new Product;
 
-    $product->name= $request->input('name');
-    //add more!
+    $product->productName = $request->input('productName');
+    $product->categoryID = $request->input('categoryID');
+    $product->description = $request->input('description');
+    $product->price = $request->input('price');
+    $product->stock = $request->input('stock');
+
+    $image = $request->('image');
+    $imageName = $image->getClientOriginalName();
+    $image->move('storage/', $imageName);
+    $product->image = $request->root()."/storage/".$imageName;
 
     $product->save();
 
     return Response::json(["success" => "Congratulations, You Did It!"]);
   }
+
   public function update($id, Request $request)
   {
     $rules = [
-      'name' => 'required',
-      //add more!
+      'productName' => 'required',
+      'categoryID' => 'required',
+      'image' => 'required',
+      'description' => 'required',
+      'price' => 'required',
+      'stock' => 'required',
+
     ];
 
     $validator = Validator::make(Purifier::clean($request->all()), $rules);
@@ -50,8 +72,19 @@ class ProductsController extends Controller
 
     $product = Product::find($id);
 
-    $product->name = $request->input('name');
-    //add more!
+    $product->productName = $request->input('productName');
+    $product->categoryID = $request->input('categoryID');
+    $product->description = $request->input('description');
+    $product->price = $request->('price');
+    $product->stock = $request->('stock');
+
+    $image = $request->file('image');
+    $imageName = $image->getClientOriginalName();
+    $image->move("storage/", $imageName);
+    $product->image = $request->root()."storage/".$imageName;
+
+    $product->save();
+
     return Response::json(['success' => "Product Has Been Updated!"])
   }
 
