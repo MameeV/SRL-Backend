@@ -14,9 +14,9 @@ class CategoriesController extends Controller
     public function index()
     {
       //create a query to get a list and receive on the Frontend
-      $catergories = Category::all();
+      $categories = Category::all();
 
-      return Response::json($catories);
+      return Response::json($categories);
     }
 
     //store - takes request param from Frontend

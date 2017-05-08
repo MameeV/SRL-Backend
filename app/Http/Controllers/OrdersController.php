@@ -7,13 +7,14 @@ use App\Categories;
 use Response;
 use Illuminate\Support\Facades\Validator;
 use Purifier;
+use Auth;
 
 class OrdersController extends Controller
 {
   {
     public function index()
     {
-      $orders = Product::all();
+      $orders = Order::all();
 
       return Response::json($orders);
     }
@@ -26,8 +27,10 @@ class OrdersController extends Controller
         'subtotal' => 'required',
         'total' => 'required',
 
-      ];
 
+      ];
+//can add comment: promocode...
+//promo code
       $validator = Validator::make(Purifier::clean($request->all()), $rules);
         if($validator->fails())
         {
@@ -35,11 +38,17 @@ class OrdersController extends Controller
         }
 
       $order = new Order;
+//Example:      $amount = $request->input('amount');
+//Example:      $amount = $amount + 10;
+//Example:      $order->amount=$amount;
+
+      $subtotal = $request->input('subtotal');
+      $total = $subtotal + 10.00;
 
       $order->usersID = $request->input('usersID');
       $order->productID = $request->input('productID');
-      $order->subtotal = $request->input('subtotal');
-      $order->total = $request->input('total');
+      $order->subtotal = $subtotal;
+      $order->total = $total;
       $order->save();
 
       return Response::json(["success" => "Congratulations, You Did It!"]);
@@ -62,7 +71,7 @@ class OrdersController extends Controller
 
       $order = Order::find($id);
 
-      $order->usersID = $request->input('usersID');
+      $order->usersID = Auth::user()->id;
       $order->productID = $request->input('productID');
       $order->subtotal = $request->input('subtotal');
       $order->total = $request->input('total');
@@ -79,7 +88,7 @@ class OrdersController extends Controller
 
     public function destory($id)
     {
-      $order = Product::find($id);
+      $order = Order::find($id);
 
       $order->delete();
 
