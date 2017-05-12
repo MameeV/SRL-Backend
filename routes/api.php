@@ -29,5 +29,15 @@ Route::get('getOrders', 'OrdersController@index');
 Route::post('updateOrder/{id}', 'OrdersController@update');
 Route::get('showOrder/{id}', 'OrdersController@show');
 Route::post('deleteOrder/{id}', 'OrdersController@destroy');
+
+Route::get('getRoles', 'RolesController@index');
+Route::post('storeRole', 'RolesController@store');
+Route::post('updateRold/{id}', 'RolesController@update');
+Route::get('showRole/{id}', 'RolesController@show');
+Route::post('deleteRole/{id}', 'RolesController@destroy');
+
+//Route::post('signup', 'UsersController@signup');
+//Route::post('signin', 'UsersController@signin');
+Route::get('getUser', 'UsersController@getUser');
 //enter more routes here, leaving below as last route!
 Route::any('{path?}', 'MainController@index')->where("path", ".+");

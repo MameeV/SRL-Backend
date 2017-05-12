@@ -17,9 +17,11 @@ class Orders extends Migration
           $table->increments('id');
           $table->integer('usersID');
           $table->integer('productID');
+          $table->integer('quantity');
           $table->string('promoCode')->nullable();
           $table->integer('subtotal');
           $table->integer('tax')->nullable();
+
           $table->integer('shipping')->nullable();
           $table->integer('total');
           $table->longText('comments')->nullable();

@@ -17,8 +17,13 @@ class Products extends Migration
         $table->increments('id');
         $table->integer('categoryID');
         $table->string('productName')->unique();
+        $table->string('modelNumber')->nullable();
+        $table->string('serialNumber')->nullable();
         $table->longText('image');
         $table->longText('description');
+        $table->string('manuelLink')->nullable();
+        $table->string('boxSize')->nullable();
+        $table->string('deliverableLink')->nullable();
         $table->integer('price');
         $table->integer('stock');
         $table->timestamps();

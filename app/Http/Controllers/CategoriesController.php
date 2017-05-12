@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Categories;
+use App\Category;
 use Response;
 use Illuminate\Support\Facades\Validator;
 use Purifier;
@@ -52,14 +52,14 @@ class CategoriesController extends Controller
       $validator = Validator::make(Purifier::clean($request->all()), $rules);
       if($validator->fails())
       {
-        return Response::json(['error'=>"ERROR! Category did not update!"])
+        return Response::json(['error'=>"ERROR! Category did not update!"]);
       }
 
       $category = Category::find($id);
 
       $category->name = $request->input('name');
 
-      return Response::json(['success' => "Category Has Been Updated!"])
+      return Response::json(['success' => "Category Has Been Updated!"]);
     }
 
     //shows individual article
@@ -71,13 +71,13 @@ class CategoriesController extends Controller
     }
 
     //delete function to delete a single category
-    public function destory($id)
+    public function destroy($id)
     {
       $category = Category::find($id);
 
       $category->delete();
 
-      return Response::json(['success' => "Category Deleted!"])
+      return Response::json(['success' => "Category Deleted!"]);
     }
 
 }
